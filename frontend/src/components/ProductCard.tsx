@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { Product } from "../store/useProductStore";
+import { useProductStore, type Product } from "../store/useProductStore";
 import { EditIcon, Trash2 } from "lucide-react";
 
 interface ProductCardPorps {
@@ -7,6 +7,8 @@ interface ProductCardPorps {
 }
 
 function ProductCard({ product }: ProductCardPorps) {
+  const { deleteProduct } = useProductStore();
+
   return (
     <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
       <figure className="relative pt-[56.25%]">
@@ -33,7 +35,10 @@ function ProductCard({ product }: ProductCardPorps) {
           <EditIcon className="size-4" />
         </Link>
 
-        <button className="btn btn-sm btn-error btn-outline">
+        <button
+          className="btn btn-sm btn-error btn-outline"
+          onClick={() => deleteProduct(product.id)}
+        >
           <Trash2 className="size-4" />
         </button>
       </div>
