@@ -8,7 +8,12 @@ import productRouter from "./routes/product.routes.js";
 const PORT = process.env.PORT;
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("dev"));

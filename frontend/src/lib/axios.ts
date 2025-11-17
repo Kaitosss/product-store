@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const apiReq = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "http://localhost:8000/product",
   withCredentials: true,
 });
