@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useProductStore } from "../store/useProductStore";
-import { Plus, RotateCw } from "lucide-react";
+import { Plus, RotateCw, Package } from "lucide-react";
 import ProductCard from "../components/ProductCard";
 
 function Home() {
@@ -22,9 +22,21 @@ function Home() {
         </button>
       </div>
 
+      {products.length === 0 && !loading && (
+        <div className="flex flex-col items-center space-y-4 h-96 justify-center">
+          <div className="rounded-full bg-base-100">
+            <Package className="size-12" />
+          </div>
+
+          <div className="text-center">
+            <h3 className="font-semibold text-2xl">No products found</h3>
+          </div>
+        </div>
+      )}
+
       {loading ? (
         <>
-          <div className="flex justify-center items-center h-64">
+          <div className="flex justify-center items-center h-96">
             <div className="loading loading-spinner loading-lg"></div>
           </div>
         </>
