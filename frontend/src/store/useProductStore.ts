@@ -17,7 +17,7 @@ interface ProductStore {
   deleteProduct: (id: number) => Promise<void>;
 }
 
-export const useProductStore = create<ProductStore>((set) => ({
+export const useProductStore = create<ProductStore>((set, get) => ({
   products: [],
   loading: false,
   fetchProducts: async () => {
@@ -35,11 +35,29 @@ export const useProductStore = create<ProductStore>((set) => ({
   deleteProduct: async (id: number) => {
     set({ loading: true });
     try {
-      await apiReq.delete(`/${id}`);
+      const response = await apiReq.delete(`/${id}`);
       set((prev) => ({
         products: prev.products.filter((product) => product.id !== id),
       }));
-      toast.success("Product deleted successfully");
+
+      if (response.data.success) {
+        toast.success("Product deleted successfully");
+      }
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      set({ loading: false });
+    }
+  },
+  addProduct: async (data: FormData) => {
+    set({ loading: true });
+    try {
+      const response = await apiReq.post("/", { data });
+      await get().fetchProducts();
+
+      if (response.data.success) {
+        toast.success("Product added successfully");
+      }
     } catch {
       toast.error("Something went wrong");
     } finally {

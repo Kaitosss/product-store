@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useProductStore } from "../store/useProductStore";
 import { Plus, RotateCw, Package } from "lucide-react";
 import ProductCard from "../components/ProductCard";
+import AddProduct from "../components/AddProduct";
 
 function Home() {
   const { products, fetchProducts, loading } = useProductStore();
@@ -13,7 +14,14 @@ function Home() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 container">
       <div className="flex justify-between items-center mb-8">
-        <button className="btn btn-primary rounded-lg">
+        <button
+          className="btn btn-primary rounded-lg"
+          onClick={() =>
+            (
+              document.getElementById("addProduct_modal") as HTMLDialogElement
+            )?.show()
+          }
+        >
           <Plus className="size-5 mr-2" />
           Add Product
         </button>
@@ -21,6 +29,8 @@ function Home() {
           <RotateCw className="size-5" />
         </button>
       </div>
+
+      {<AddProduct />}
 
       {products.length === 0 && !loading && (
         <div className="flex flex-col items-center space-y-4 h-96 justify-center">

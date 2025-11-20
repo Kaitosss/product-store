@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
+    "@uploadthing/react": "^7.3.3",
     "axios": "^1.13.2",
     "lucide-react": "^0.553.0",
     "react": "^19.2.0",
@@ -18,6 +19,7 @@
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.9.5",
     "tailwindcss": "^4.1.17",
+    "uploadthing": "^7.7.4",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
