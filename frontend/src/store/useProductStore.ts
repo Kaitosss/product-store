@@ -15,7 +15,14 @@ interface ProductStore {
   loading: boolean;
   fetchProducts: () => Promise<void>;
   deleteProduct: (id: number) => Promise<void>;
+  addProduct: (data: ProductDataType) => void;
 }
+
+export type ProductDataType = {
+  name: string;
+  image: string | File | null;
+  price: number;
+};
 
 export const useProductStore = create<ProductStore>((set, get) => ({
   products: [],
@@ -49,10 +56,10 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       set({ loading: false });
     }
   },
-  addProduct: async (data: FormData) => {
+  addProduct: async (data: ProductDataType) => {
     set({ loading: true });
     try {
-      const response = await apiReq.post("/", { data });
+      const response = await apiReq.post("/", data);
       await get().fetchProducts();
 
       if (response.data.success) {

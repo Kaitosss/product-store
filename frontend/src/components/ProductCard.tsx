@@ -23,7 +23,7 @@ function ProductCard({ product }: ProductCardPorps) {
         <div className="font-semibold text-lg">{product.name}</div>
 
         <div className="mt-3 text-lg font-semibold">
-          {product.price + " THB"}
+          {Number(product.price).toLocaleString() + " THB"}
         </div>
       </div>
 

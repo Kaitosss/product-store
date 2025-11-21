@@ -1,4 +1,5 @@
 import { sql } from "../config/db.js";
+import cloudinary from "../lib/cloudinary.js";
 
 export const getProducts = async (req, res) => {
   try {
@@ -32,6 +33,10 @@ export const getProduct = async (req, res) => {
 export const createProduct = async (req, res) => {
   const { name, image, price } = req.body;
 
+  const result = await cloudinary.uploader.upload(image, {
+    folder: "product-store",
+  });
+
   if (!name || !image || !price) {
     return res
       .status(400)
@@ -40,8 +45,8 @@ export const createProduct = async (req, res) => {
 
   try {
     const newProduct = await sql`
-      INSERT INTO products (name,image,price)
-      VALUES (${name},${image},${price})
+      INSERT INTO products (name,image,price,"imagePublicId")
+      VALUES (${name},${result.secure_url},${price},${result.public_id})
       RETURNING *
     `;
 
@@ -82,6 +87,16 @@ export const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
+    const result = await sql`
+      SELECT "imagePublicId" FROM products WHERE id=${id}
+    `;
+
+    const public_id = result[0]?.imagePublicId;
+
+    if (public_id) {
+      await cloudinary.uploader.destroy(public_id);
+    }
+
     const deletedProduct = await sql`
       DELETE FROM products WHERE id=${id} RETURNING *
     `;
@@ -89,7 +104,7 @@ export const deleteProduct = async (req, res) => {
     if (deletedProduct.length === 0) {
       return res.status(404).json({
         success: false,
-        message: "Product not found",
+        message: "Proๆduct not found",
       });
     }
 
