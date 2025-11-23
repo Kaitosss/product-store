@@ -23,7 +23,7 @@ function Product() {
     price: product?.price || 0,
   });
   const [previewImage, setPreviewImage] = useState<File | null>(null);
-  const { deleteProduct } = useProductStore();
+  const { deleteProduct, updateProduct } = useProductStore();
 
   const Changedata = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -91,7 +91,7 @@ function Product() {
           <p className="py-4">Are you sure you want to delete this product?</p>
           <div className="modal-action">
             <form method="dialog">
-              <button className="btn">Cancel</button>
+              <button className="btn mr-3">Cancel</button>
               <button onClick={handleDelete} className="btn btn-error">
                 Confirm
               </button>
@@ -171,7 +171,10 @@ function Product() {
                   <Trash2 className="size-4" />
                   Delete Product
                 </button>
-                <button className="btn btn-success rounded-2xl">
+                <button
+                  className="btn btn-success rounded-2xl"
+                  onClick={() => updateProduct(id, data)}
+                >
                   <SquarePen className="size-4" />
                   Edit Product
                 </button>

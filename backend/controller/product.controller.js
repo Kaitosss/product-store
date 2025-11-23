@@ -61,10 +61,34 @@ export const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { name, price, image } = req.body;
 
+  if (!name || !image || !price) {
+    return res
+      .status(400)
+      .json({ success: false, message: "All fields are required" });
+  }
+
   try {
+    const result_publicId = await sql`
+    SELECT image,"imagePublicId" FROM products WHERE id=${id}
+    `;
+
+    let public_id = result_publicId[0].imagePublicId;
+    let ImageUrl = result_publicId[0].image;
+
+    if (image.startsWith("data:image")) {
+      await cloudinary.uploader.destroy(public_id);
+
+      const result = await cloudinary.uploader.upload(image, {
+        folder: "product-store",
+      });
+
+      ImageUrl = result.secure_url;
+      public_id = result.public_id;
+    }
+
     const updateProduct = await sql`
       UPDATE products
-      SET name=${name}, price=${price}, image=${image}
+      SET name=${name}, price=${price}, image=${ImageUrl}, "imagePublicId"=${public_id}
       WHERE id=${id}
       RETURNING *
     `;

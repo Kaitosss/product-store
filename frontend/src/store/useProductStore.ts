@@ -90,6 +90,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     }
   },
   updateProduct: async (id: string | undefined, data: ProductDataType) => {
+    set({ loading: true });
     try {
       const response = await apiReq.put(`/${id}`, data);
 
@@ -99,6 +100,8 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       }
     } catch {
       toast.error("Something went wrong");
+    } finally {
+      set({ loading: false });
     }
   },
 }));
