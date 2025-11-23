@@ -86,6 +86,20 @@ function Product() {
         Back to Products
       </button>
 
+      <dialog id="confirmModal" className="modal">
+        <div className="modal-box">
+          <p className="py-4">Are you sure you want to delete this product?</p>
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn">Cancel</button>
+              <button onClick={handleDelete} className="btn btn-error">
+                Confirm
+              </button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
       {product && (
         <div className="card bg-base-100 shadow-xl rounded-2xl overflow-hidden">
           <div className="flex">
@@ -146,7 +160,13 @@ function Product() {
               <div className="mt-10 flex gap-5">
                 <button
                   className="btn btn-error rounded-2xl"
-                  onClick={handleDelete}
+                  onClick={() =>
+                    (
+                      document.getElementById(
+                        "confirmModal"
+                      ) as HTMLDialogElement
+                    )?.showModal()
+                  }
                 >
                   <Trash2 className="size-4" />
                   Delete Product
