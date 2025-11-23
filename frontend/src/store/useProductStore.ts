@@ -13,19 +13,26 @@ export interface Product {
 interface ProductStore {
   products: Product[];
   loading: boolean;
+  product: Product | null;
   fetchProducts: () => Promise<void>;
-  deleteProduct: (id: number) => Promise<void>;
-  addProduct: (data: ProductDataType) => void;
+  deleteProduct: (id: number | string | undefined) => Promise<void>;
+  addProduct: (data: ProductDataType) => Promise<void>;
+  fetchProduct: (id: string) => Promise<void>;
+  updateProduct: (
+    id: string | undefined,
+    data: ProductDataType
+  ) => Promise<void>;
 }
 
 export type ProductDataType = {
   name: string;
-  image: string | File | null;
+  image: string | null;
   price: number;
 };
 
 export const useProductStore = create<ProductStore>((set, get) => ({
   products: [],
+  product: null,
   loading: false,
   fetchProducts: async () => {
     set({ loading: true });
@@ -39,7 +46,7 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       set({ loading: false });
     }
   },
-  deleteProduct: async (id: number) => {
+  deleteProduct: async (id: number | string | undefined) => {
     set({ loading: true });
     try {
       const response = await apiReq.delete(`/${id}`);
@@ -69,6 +76,29 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       toast.error("Something went wrong");
     } finally {
       set({ loading: false });
+    }
+  },
+  fetchProduct: async (id: string) => {
+    set({ loading: true });
+    try {
+      const response = await apiReq.get(`/${id}`);
+      set({ product: response.data.data });
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      set({ loading: false });
+    }
+  },
+  updateProduct: async (id: string | undefined, data: ProductDataType) => {
+    try {
+      const response = await apiReq.put(`/${id}`, data);
+
+      if (response.data.success) {
+        toast.success("Product updated successfully");
+        set({ product: response.data.data });
+      }
+    } catch {
+      toast.error("Something went wrong");
     }
   },
 }));
