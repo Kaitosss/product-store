@@ -32,7 +32,7 @@ function Home() {
 
       {<AddProduct />}
 
-      {products.length === 0 && !loading && (
+      {products?.length === 0 && !loading && (
         <div className="flex flex-col items-center space-y-4 h-96 justify-center">
           <div className="rounded-full bg-base-100">
             <Package className="size-12" />

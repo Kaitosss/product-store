@@ -23,7 +23,10 @@ function ProductCard({ product }: ProductCardPorps) {
         <div className="font-semibold text-lg">{product.name}</div>
 
         <div className="mt-3 text-lg font-semibold">
-          {Number(product.price).toLocaleString() + " THB"}
+          {Number(product.price).toLocaleString("th-TH", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          }) + " THB"}
         </div>
       </div>
 

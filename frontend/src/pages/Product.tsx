@@ -102,7 +102,7 @@ function Product() {
 
       {product && (
         <div className="card bg-base-100 shadow-xl rounded-2xl overflow-hidden">
-          <div className="flex">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <img
               src={
                 previewImage
@@ -110,7 +110,7 @@ function Product() {
                   : data.image || undefined
               }
               alt=""
-              className="w-[400px] h-[450px] object-cover"
+              className="w-full h-[350px] lg:h-[450px] object-cover"
             />
 
             <div className="py-7 px-20">
@@ -157,7 +157,7 @@ function Product() {
                 />
               </div>
 
-              <div className="mt-10 flex gap-5">
+              <div className="mt-10 flex gap-5 justify-center items-center">
                 <button
                   className="btn btn-error rounded-2xl"
                   onClick={() =>
