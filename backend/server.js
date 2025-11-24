@@ -6,7 +6,7 @@ import cors from "cors";
 import productRouter from "./routes/product.routes.js";
 import path from "path";
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 const app = express();
 const __dirname = path.resolve();
 
