@@ -7,13 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "postinstall": "npm install --save-dev @types/react-dom @vitejs/plugin-react"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
     "axios": "^1.13.2",
     "browser-image-compression": "^2.0.2",
     "lucide-react": "^0.553.0",
@@ -22,18 +23,13 @@
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.9.5",
     "tailwindcss": "^4.1.17",
-    "typescript": "~5.9.3",
     "vite": "^7.2.4",
-    "zustand": "^5.0.8",
-    "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react": "^5.1.0"
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
     "daisyui": "^5.5.3",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
